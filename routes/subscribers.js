@@ -1,10 +1,16 @@
 const express = require("express");
 const router = express.Router();
+const Subscriber = require("../models/subscriber");
 
 // Routes for various things
 // Getting all
-router.get("/", (req, res) => {
-  res.send("Hello world!");
+router.get("/", async (req, res) => {
+  try {
+    const subscribers = await Subscriber.find();
+    res.json(subscribers);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 // Getting one so we will have to use some id
